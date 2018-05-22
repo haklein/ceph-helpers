@@ -36,8 +36,7 @@ conn_secondary = boto.connect_s3(
 
 for bucket in conn_primary.get_all_buckets():
 	print "{name}\t{created}".format( name = bucket.name, created = bucket.creation_date,)
-	rs_keys = bucket.get_all_keys()
-	for key_val in rs_keys:
+	for key_val in bucket:
 		print "P",key_val, key_val.name, key_val.etag
 		try:
 			bucket_secondary = conn_secondary.get_bucket(bucket.name)
