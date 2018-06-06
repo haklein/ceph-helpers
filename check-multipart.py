@@ -24,6 +24,6 @@ conn = boto.connect_s3(
 	)
 
 for bucket in conn.get_all_buckets():
-  print "{name}\t{created}".format( name = bucket.name, created = bucket.creation_date,)
-  print "Multipart uploads: ", bucket.get_all_multipart_uploads()
+	print "{name}\t{created}".format( name = bucket.name, created = bucket.creation_date,)
+	print "Multipart uploads: ", bucket.get_all_multipart_uploads()
   
