@@ -1,4 +1,7 @@
 #!/usr/bin/python
+#
+# something similar can be achieved with:
+# jq -r '.[].entries[] | [.timestamp, .info.error_code, .info.message, .name] | @csv'
 
 import json
 import sys
