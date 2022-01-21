@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
 # iterates over buckets and compares the md5 checksum across objects on primary and secondary connection
 #
@@ -14,24 +14,20 @@ secret_key = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
 rgw_endpoint_primary = 'http://primary:80'
 rgw_endpoint_secondary  = 'http://secondary:80'
 
-# when all_buckets is set to true, the script will iterate over all buckets
-all_buckets = True
-# when it is set to false, the bucket name needs to be specified:
-single_bucket_name = 'test2'
 
 compare_dicts = True
 
 conn_primary = boto3.client('s3',
         endpoint_url=rgw_endpoint_primary,
-	aws_access_key_id = access_key,
-	aws_secret_access_key = secret_key,
-	)
+        aws_access_key_id = access_key,
+        aws_secret_access_key = secret_key,
+        )
 
 conn_secondary = boto3.client('s3',
         endpoint_url=rgw_endpoint_secondary,
-	aws_access_key_id = access_key,
-	aws_secret_access_key = secret_key,
-	)
+        aws_access_key_id = access_key,
+        aws_secret_access_key = secret_key,
+        )
 
 
 def bucket2list(s3, bucket_name):
@@ -46,10 +42,10 @@ def bucket2list(s3, bucket_name):
         response = s3.list_objects_v2(Bucket=bucket_name,ContinuationToken=response['NextContinuationToken'])
     return result
 
-if all_buckets:
-    bucketlist = conn_primary.list_buckets()
+if len(sys.argv) == 2:
+    bucketlist = {'Buckets':[{'Name':sys.argv[1]}]}
 else:
-    bucketlist = {'Buckets':[{'Name':single_bucket_name}]}
+    bucketlist = conn_primary.list_buckets()
 
 for bucket in bucketlist['Buckets']:
     print("Bucket: ", bucket['Name'])
